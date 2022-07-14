@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({Key? key}) : super(key: key);
+  final Future<void> Function(String email, String password, String userName,
+      bool isLogin, BuildContext ctx) onSubmit;
+  final bool isLoading;
+
+  const AuthForm(this.onSubmit, this.isLoading, {Key? key}) : super(key: key);
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -14,12 +18,20 @@ class _AuthFormState extends State<AuthForm> {
   var _userName = '';
   var _userPassword = '';
 
-  void _trySubmit() {
+  Future<void> _trySubmit() async {
     if (_formkey.currentState == null) return;
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formkey.currentState!.save();
+      await widget.onSubmit(
+        _userEmail.trim(),
+        _userPassword.trim(),
+        _userName.trim(),
+        _isLogin,
+        context,
+      );
+      _isLogin = true;
       // User those values to send our auth request ...
     }
   }
@@ -73,6 +85,7 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                   TextFormField(
                     key: ValueKey('password'),
+                    obscureText: true,
                     validator: (value) {
                       if (value == null)
                         return 'Password must be at least 7 characters long.';
@@ -90,21 +103,24 @@ class _AuthFormState extends State<AuthForm> {
                   const SizedBox(
                     height: 12,
                   ),
-                  RaisedButton(
-                    onPressed: _trySubmit,
-                    child: Text(_isLogin ? 'Login' : 'Sign up'),
-                  ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      setState(() {
-                        _isLogin = !_isLogin;
-                      });
-                    },
-                    child: Text(_isLogin
-                        ? "Create new account"
-                        : "i already have an account"),
-                  )
+                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    RaisedButton(
+                      onPressed: _trySubmit,
+                      child: Text(_isLogin ? 'Login' : 'Sign up'),
+                    ),
+                  if (!widget.isLoading)
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                      child: Text(_isLogin
+                          ? "Create new account"
+                          : "i already have an account"),
+                    )
                 ],
               ),
             ),
