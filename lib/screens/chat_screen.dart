@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/chat/messages.dart';
+import '../widgets/chat/new_message.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -12,10 +13,10 @@ class ChatScreen extends StatelessWidget {
         .collection('chats/9HtkwtDoDP78JX3O87Lu/messages');
     return Scaffold(
       appBar: AppBar(
-        title: Text('FlutterChat'),
+        title: const Text('FlutterChat'),
         actions: [
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: DropdownButton(
               icon: Icon(
                 Icons.more_vert,
@@ -23,18 +24,16 @@ class ChatScreen extends StatelessWidget {
               ),
               items: [
                 DropdownMenuItem(
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.exit_to_app),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text('Logout')
-                      ],
-                    ),
-                  ),
                   value: 'logout',
+                  child: Row(
+                    children: const [
+                      Icon(Icons.exit_to_app),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Logout')
+                    ],
+                  ),
                 ),
               ],
               onChanged: (itemIdetifier) async {
@@ -46,14 +45,13 @@ class ChatScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Expanded(
-              child: Messages(),
-            ),
-          ],
-        ),
+      body: Column(
+        children: const [
+          Expanded(
+            child: Messages(),
+          ),
+          NewMessage(),
+        ],
       ),
       // StreamBuilder(
       //   stream: firebaseInstance.snapshots(),
@@ -74,13 +72,6 @@ class ChatScreen extends StatelessWidget {
       //     );
       //   },
       // ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          firebaseInstance
-              .add({'text': "This was added by clicking the button!"});
-        },
-      ),
     );
   }
 }
