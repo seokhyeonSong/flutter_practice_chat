@@ -89,7 +89,7 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   if (!_isLogin)
                     TextFormField(
-                      key: const ValueKey('username'),
+                      key: const ValueKey('userName'),
                       validator: (value) {
                         if (value == null)
                           return 'Please enter at least 4 characters.';

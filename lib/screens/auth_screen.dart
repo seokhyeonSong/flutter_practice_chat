@@ -21,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Future<void> _submitAuthForm(
     String email,
     String password,
-    String username,
+    String userName,
     File imageFile,
     bool isLogin,
     BuildContext ctx,
@@ -59,7 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
-        'username': username,
+        'userName': userName,
         'email': email,
         'image_url': url,
       });
@@ -76,13 +76,13 @@ class _AuthScreenState extends State<AuthScreen> {
       );
       if (mounted) {
         setState(() {
-          _isLoading = true;
+          _isLoading = false;
         });
       }
     } catch (error) {
       if (mounted) {
         setState(() {
-          _isLoading = true;
+          _isLoading = false;
         });
       }
     }
