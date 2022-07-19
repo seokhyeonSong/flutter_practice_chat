@@ -19,9 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Chat',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
         backgroundColor: Colors.pink,
-        accentColor: Colors.deepPurple,
         accentColorBrightness: Brightness.dark,
         buttonTheme: ButtonTheme.of(context).copyWith(
           buttonColor: Colors.pink,
@@ -30,14 +28,16 @@ class MyApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)
+            .copyWith(secondary: Colors.deepPurple),
       ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (ctx, snapshot) {
           if (snapshot.hasData) {
-            return ChatScreen();
+            return const ChatScreen();
           }
-          return AuthScreen();
+          return const AuthScreen();
         },
       ),
     );

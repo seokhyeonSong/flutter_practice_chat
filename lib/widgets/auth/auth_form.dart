@@ -73,15 +73,17 @@ class _AuthFormState extends State<AuthForm> {
                   TextFormField(
                     key: const ValueKey('email'),
                     validator: (value) {
-                      if (value == null)
+                      if (value == null) {
                         return 'Please enter a valid email address';
-                      if (value.isEmpty || !value.contains('@'))
+                      }
+                      if (value.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid email address';
+                      }
                       return null;
                     },
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                      labelText: "Email address",
+                      labelText: 'Email address',
                     ),
                     onSaved: (value) {
                       if (value != null) _userEmail = value;
@@ -91,10 +93,12 @@ class _AuthFormState extends State<AuthForm> {
                     TextFormField(
                       key: const ValueKey('userName'),
                       validator: (value) {
-                        if (value == null)
+                        if (value == null) {
                           return 'Please enter at least 4 characters.';
-                        if (value.isEmpty || value.length < 4)
+                        }
+                        if (value.isEmpty || value.length < 4) {
                           return 'Please enter at least 4 characters.';
+                        }
                         return null;
                       },
                       decoration: const InputDecoration(
@@ -108,10 +112,12 @@ class _AuthFormState extends State<AuthForm> {
                     key: const ValueKey('password'),
                     obscureText: true,
                     validator: (value) {
-                      if (value == null)
+                      if (value == null) {
                         return 'Password must be at least 7 characters long.';
-                      if (value.isEmpty || value.length < 7)
+                      }
+                      if (value.isEmpty || value.length < 7) {
                         return 'Password must be at least 7 characters long.';
+                      }
                       return null;
                     },
                     decoration: const InputDecoration(
@@ -139,8 +145,8 @@ class _AuthFormState extends State<AuthForm> {
                         });
                       },
                       child: Text(_isLogin
-                          ? "Create new account"
-                          : "i already have an account"),
+                          ? 'Create new account'
+                          : 'i already have an account'),
                     )
                 ],
               ),
